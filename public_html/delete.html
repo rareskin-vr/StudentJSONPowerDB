@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="http://login2explore.com/jpdb/resources/js/0.0.3/jpdb-commons.js"></script>
+        <script src="global.js"></script>
+
+        <title>Delete Student Data</title>
+    </head>
+    <body>
+    <center><h1>Delete Student Data</h1></center>
+    <center>
+        <input id="usn" maxlength="13" placeholder="USN" name="usn" type="text"/><br><br>
+        <input type="button" value=" Delete data" onclick="deleteData();"/>
+    </center>
+</body>
+<script>
+    function deleteData() {
+        var usn = document.getElementById("usn").value;
+        var jsonStr = {
+            usn: usn
+        };
+        var reqString = createGET_BY_KEYRequest(token, dbname, relationname, JSON.stringify(jsonStr));
+
+        alert(reqString);
+        jQuery.ajaxSetup({async: false});
+        var resultObj = executeCommandAtGivenBaseUrl(reqString,
+                "http://api.login2explore.com:5577", "/api/irl");
+        jQuery.ajaxSetup({async: true});
+        var data = JSON.stringify(resultObj);
+        var res = data.split("\"");
+        var recId = res[5].replace(":", "");
+        recId = recId.replace(",\\", "");
+        var reqString = createREMOVERecordRequest(token, dbname, relationname, recId);
+        alert(res);
+
+        jQuery.ajaxSetup({async: false});
+        var resultObj = executeCommandAtGivenBaseUrl(reqString,
+                "http://api.login2explore.com:5577", "/api/iml");
+        jQuery.ajaxSetup({async: true});
+        alert("Enrollment Delete:" + JSON.stringify(resultObj));
+
+    }
+</script>
+</html>

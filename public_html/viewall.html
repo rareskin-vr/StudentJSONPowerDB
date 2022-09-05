@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="http://login2explore.com/jpdb/resources/js/0.0.3/jpdb-commons.js"></script>
+         <script src="global.js"></script>
+
+        <title>View all</title>
+    </head>
+    <body>
+    <center><h1> Students Records</h1>
+        <input type="button" value="Display" onclick="showData();"/></center>
+    <p id="show"> </p>
+</body>
+<script>
+    function showData() {
+        var reqString = createGETALLRecordRequest(token, dbname, relationname, 1, 100);
+        alert(reqString);
+        jQuery.ajaxSetup({async: false});
+        var resultObj = executeCommandAtGivenBaseUrl(reqString,
+                "http://api.login2explore.com:5577", "/api/irl");
+        jQuery.ajaxSetup({async: true});
+        var data = JSON.stringify(resultObj);
+        var mainContainer = document.getElementById("show");
+        document.getElementById('show').innerHTML = data;
+
+
+    }
+
+
+</script>
+
+</html>

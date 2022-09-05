@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Enrollment</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="http://login2explore.com/jpdb/resources/js/0.0.3/jpdb-commons.js"></script>
+        <script src="global.js"></script>
+    </head>
+    <body>
+
+        <form id="myForm"  method="post">
+            <table width="700" border="0" align="center" cellpadding="0" cellspacing="5">
+                <tr>
+                    <th width="25%" height="60">&nbsp;</th>
+                    <th><h1><p>Enrollment</p></h1></th>
+                    <th width="10%">&nbsp;</th>
+                </tr>
+                <tr>
+                    <td><strong>Name:</strong></td>
+                    <td><input id="name" name="name" type="text" size="35" required/></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td><strong>USN:</strong></td>
+                    <td><input id="usn" type="text" size="13" required /></td>
+                    <td>&nbsp;</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Email:</strong></td>
+                    <td><input id="email" name="email" type="email" size="35" required/></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td><strong>Father's Name:</strong></td>
+                    <td><input id="father" name="name" type="text" size="35" required/></td>
+                    <td>&nbsp;</td>
+                </tr>
+
+
+                <tr>
+                    <td><strong>Department:</strong></td>
+                    <td><select   id="dept" name="dept" >
+                            <option>Select</option>
+                            <option value="Computer Science and Engineering">Computer Science and Engineering</option>
+                            <option value="Information Technology">Information Technology</option>
+                        </select>
+
+
+                    </td>
+                <tr>
+                    <td><strong>Mobile Number:</strong></td>
+                    <td><input id="mobileno" name="mobileno" type="tel" size="10" placeholder="+91 xxxxxxxxxx" pattern="[0-9]{10}"/></td>
+                    <td>&nbsp;</td>
+                </tr>
+
+            </table>
+            <center>
+                <input type="reset" />
+                <input type="button" value="Register" onclick="registerCandidate();"/>
+            </center>
+        </form>
+    </body>
+    <script>
+        function validateAndGetFormData() {
+
+            var name = document.getElementById("name").value;
+            if (name === "") {
+                alert("Enter Student Name");
+                $("#name").focus();
+                return "";
+            }
+            var usn = document.getElementById("usn").value;
+            if (usn === "") {
+                alert("Enter USN");
+                $("#usn").focus();
+                return "";
+            }
+            var email = document.getElementById("email").value;
+            if (email === "") {
+                alert("Enter email");
+                $("#email").focus();
+                return "";
+            }
+            var dept = document.getElementById("dept").value;
+            if (dept === "") {
+                alert("Enter Deparment");
+                $("#dept").focus();
+                return "";
+            }
+            var mobileno = document.getElementById("mobileno").value;
+            if (mobileno === "") {
+                alert("Enter Mobile Number");
+                $("#mobileno").focus();
+                return "";
+            }
+            var father = document.getElementById("father").value;
+            if (name === "") {
+                alert("Enter father's Name");
+                $("#father").focus();
+                return "";
+            }
+            var jsonStrObj = {
+                student_name: name,
+                email: email,
+                department: dept,
+                mobile_no: mobileno,
+                usn: usn,
+                father_name: father,
+
+            };
+            return JSON.stringify(jsonStrObj);
+        }
+        function registerCandidate() {
+
+            var jsonStr = validateAndGetFormData();
+            if (jsonStr === "") {
+                return;
+            }
+            var putReqStr = createPUTRequest(token, jsonStr, dbname, relationname);
+            alert(putReqStr);
+            jQuery.ajaxSetup({async: false});
+            var resultObj = executeCommandAtGivenBaseUrl(putReqStr,
+                    "http://api.login2explore.com:5577", "/api/iml");
+            jQuery.ajaxSetup({async: true});
+            alert("VALUES INSERTED " + JSON.stringify(resultObj));
+            document.getElementById("myForm").reset();
+        }
+
+
+    </script>
+</html>

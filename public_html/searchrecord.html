@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Search Record</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="http://login2explore.com/jpdb/resources/js/0.0.3/jpdb-commons.js"></script>
+        <script src="global.js"></script>
+
+
+    </head>
+    <body>
+    <center><h1>Search data</h1></center>
+    <center>
+        <input id="usn" maxlength="50" placeholder="usn" name="usn" type="text"/><br><br>
+        <input type="button" value="Search" onclick="showData();"/></center>
+
+    <center><p id="show"></p></center>>
+
+</body>
+<script>
+    function showData() {
+        var usn = document.getElementById("usn").value;
+        var jsonStr = {
+            usn: usn
+        };
+        var reqString = createGETRequest(token, dbname, relationname, JSON.stringify(jsonStr));
+
+        alert(reqString);
+        jQuery.ajaxSetup({async: false});
+        var resultObj = executeCommandAtGivenBaseUrl(reqString,
+                "http://api.login2explore.com:5577", "/api/irl");
+        jQuery.ajaxSetup({async: true});
+
+        var data = JSON.stringify(resultObj);
+        var res = data.split("\"");
+        var mainContainer = document.getElementById("show");
+
+        mainContainer.innerHTML = "Name : " + res[6].replace("\\", "")
+                + "<br>Usn : " + res[10].replace("\\", "")
+                + "<br>Father's Name. : " + res[14].replace("\\", "")
+                + "<br>Mobile no. : " + res[18].replace("\\", "")
+                + "<br>Department : " + res[22].replace("\\", "")
+                + "<br>Email : " + res[26].replace("\\", "");
+    }
+</script>
+</html>

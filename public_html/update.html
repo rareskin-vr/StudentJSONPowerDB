@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Update</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+         <script src="http://login2explore.com/jpdb/resources/js/0.0.3/jpdb-commons.js"></script>
+                  <script src="global.js"></script>
+
+    </head>
+    <body>
+        <center>
+            <p><h1>Enter your Record ID number</h1></p>
+        <input id="recordID" maxlength="13" placeholder="RECORD ID" name="usn" type="text"/><br><br>
+       <h1> <p>Update your USN number</p></h1>
+        <input id="usn2" name="usn2" type="text" size="35" placeholder="1AT*******"/><br><br>
+        <input type="button" value="UPDATE" onclick="updateData();"/>
+    </center>
+    
+    <p id="show"></p>
+    </body>
+    <script>    
+        function updateData(){
+            var record = document.getElementById("recordID").value;
+            var usn2 = document.getElementById("usn2").value;
+            
+            var jsonStr = {
+                usn : usn2
+            };
+            var reqString = createUPDATERecordRequest(token, JSON.stringify(jsonStr), dbname, relationname,record);
+            alert(reqString);
+            jQuery.ajaxSetup({async: false});
+            var resultObj = executeCommandAtGivenBaseUrl(reqString,
+                    "http://api.login2explore.com:5577", "/api/iml");
+            jQuery.ajaxSetup({async: true});
+            alert(JSON.stringify(resultObj));
+            
+        }
+    </script>
+  
+</html>
