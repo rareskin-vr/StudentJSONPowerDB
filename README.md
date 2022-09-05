@@ -16,3 +16,6 @@ Simplest way to retrieve data in a JSON format.
 Web-services API - Can be used with any programming language that has support for HTTP.
 It is built on top of one of the fastest and real-time data indexing engine - PowerIndeX.
 It helps developers in faster coding, in-turn reduces development cost.
+
+Release History
+v0.1 (05/09/2022)
