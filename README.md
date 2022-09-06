@@ -10,6 +10,7 @@ JPDB supports and advocates for true serverless and pluggable API development.Ea
 You can read the documentation by clicking here.
 
 Benefits of using JsonPowerDB
+
 JsonPowerDB (JPDB) is Next Generation, Creative and Disruptive Multi-mode DBMS_ with many USPs.
 
 Proprietary algorithm for High Performance CRUD operations. Multiple times faster than popular DBMS.
